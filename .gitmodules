@@ -1,0 +1,3 @@
+[submodule "RotMG-Dungeon-Generator"]
+	path = RotMG-Dungeon-Generator
+	url = https://github.com/cp-nilly/RotMG-Dungeon-Generator.git

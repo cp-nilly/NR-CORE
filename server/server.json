@@ -1,0 +1,19 @@
+{
+  "dbInfo": {
+    "host": "127.0.0.1",
+    "port": "6379",
+    "auth": "",
+    "index": "0"
+  },
+  "serverInfo": {
+    "type": "Account",
+    "name": "AppEngine",
+    "bindAddress":  "127.0.0.1", // enter * to bind to all network connections
+    "port": "8080"
+  },
+  "serverSettings": {
+    "logFolder": "./logs",
+    "resourceFolder":  "./resources",
+    "sendGridApiKey": ""
+  }
+}

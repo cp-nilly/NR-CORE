@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">   
+ 
+  <Target Name="Run">
+    <CallTarget Targets="Build" />
+  </Target>
+  
+  <Target Name="Build">
+	 <MSBuild Projects="common/common.csproj" Properties="Configuration=Debug;TargetFrameworkVersion=v4.5.1;OutDir=/usr/src/app/build/" ContinueOnError="False"/>
+	 <MSBuild Projects="server/server.csproj" Properties="Configuration=Debug;TargetFrameworkVersion=v4.5.1;OutDir=/usr/src/app/build/" ContinueOnError="False"/>
+	 <MSBuild Projects="RotMG-Dungeon-Generator\DungeonGen\DungeonGen.csproj" Properties="Configuration=Debug;TargetFrameworkVersion=v4.5.1;OutDir=/usr/src/app/build/" ContinueOnError="False"/>
+	 <MSBuild Projects="wServer/wServer.csproj" Properties="Configuration=Debug;TargetFrameworkVersion=v4.5.1;OutDir=/usr/src/app/build/" ContinueOnError="False"/>
+   <MSBuild Projects="RemoteLogger/RemoteLogger.csproj" Properties="Configuration=Debug;TargetFrameworkVersion=v4.5.1" ContinueOnError="False"/>
+  </Target>
+</Project>

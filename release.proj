@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">   
+ 
+  <Target Name="Run">
+    <CallTarget Targets="Clean" />
+    <CallTarget Targets="Restore" />
+    <CallTarget Targets="Build" />
+  </Target>
+
+  <Target Name="Clean">
+    <Message Text="Clean" />
+    <RemoveDir Directories="bin; RotMG-Dungeon-Generator/DungeonGen/bin" ContinueOnError="False"/>
+    <RemoveDir Directories="common/obj; server/obj; RotMG-Dungeon-Generator/DungeonGen/obj; wServer/obj; RemoteLogger/obj;" ContinueOnError="False"/>
+  </Target>
+ 
+  <Target Name="Restore">
+    <Exec Command="nuget.exe restore" ContinueOnError="False"/>
+  </Target>
+  
+  <Target Name="Build">
+	 <MSBuild Projects="common/common.csproj" Properties="Configuration=Release;TargetFrameworkVersion=v4.5.1" ContinueOnError="False"/>
+	 <MSBuild Projects="server/server.csproj" Properties="Configuration=Release;TargetFrameworkVersion=v4.5.1" ContinueOnError="False"/>
+	 <MSBuild Projects="RotMG-Dungeon-Generator\DungeonGen\DungeonGen.csproj" Properties="Configuration=Release;TargetFrameworkVersion=v4.5.1" ContinueOnError="False"/>
+	 <MSBuild Projects="wServer/wServer.csproj" Properties="Configuration=Release;TargetFrameworkVersion=v4.5.1" ContinueOnError="False"/>
+   <MSBuild Projects="RemoteLogger/RemoteLogger.csproj" Properties="Configuration=Release;TargetFrameworkVersion=v4.5.1" ContinueOnError="False"/>
+  </Target>
+</Project>

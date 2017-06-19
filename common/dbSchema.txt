@@ -1,0 +1,181 @@
+﻿nextAccId (int)
+nextGuildId (int)
+marketNextId (int)
+nextPetId (int)
+
+regLock (string) // used as a lock when registering new accounts
+nameLock (string) // used as a lock when renaming accounts
+lock:(accId) (string) // account lock
+dLock:(discordId) (string) // discordId lock
+
+logins
+  uuid => (json object)
+    Salt (string)
+    HashedPassword (string)
+    AccountId (int)
+
+names
+  name => accId (int)
+
+account.(accId)
+  accountIdOverride (int)
+  uuid (string)
+  name (string)
+  admin (bool)
+  nameChosen (bool)
+  verified (bool)
+  ageVerified (bool)
+  firstDeath (bool)
+  petYardType (int)
+  guildId (int)
+  guildRank (int)
+  guildFame (int)
+  vaultCount (int)
+  gifts (short[])
+  maxCharSlot (int)
+  regTime (DateTime)
+  guest (bool)
+  credits (int)
+  totalCredits (int)
+  fame (int)
+  totalFame (int)
+  tokens (int)
+  totalTokens (int)
+  nextCharId (int)
+  rank (int)
+  skins (short[])
+  lockList (int[])
+  ignoreList (int[])
+  legend (bool)
+  banned (bool)
+  notes (string)
+  hidden (bool)
+  glow (int)
+  passResetToken (string)
+  ip (string)
+  petList (int[])
+  lastMarketId (uint)
+  banLiftTime (int)
+  emotes (string)
+  lastSeen (int)
+  rankManager (int)
+  discordId (string)
+  privateMessages (string)
+
+classStats.(accId)
+  objType => (json string)
+    BestLevel (int)
+    BestFame (int)
+
+char.(accId).(id)
+  charType (ushort)
+  level (int)
+  exp (int)
+  fame (int)
+  finalFame (int)
+  items (ushort[20])
+  hp (int)
+  mp (int)
+  stats (int[])
+  tex1 (int)
+  tex2 (int)
+  skin (int)
+  petId (int)
+  fameStats (byte[])
+  createTime (DateTime)
+  lastSeen (DateTime)
+  dead (bool)
+  hpPotCount (int)
+  mpPotCount (int)
+  hasBackpack (bool)
+  xpBoost => time left on experience boost (int)
+  ldBoost => time left on loot drop boost (int)
+  ltBoost => time left on loot tier boost (int)
+
+alive.(accId) [set] => list of all living characters for the account
+// notes: character ids (an int) are stored as a byte array (4 bytes)
+
+dead.(accId) [List] => list all dead characters (their character id) starting with the most recent death
+// notes: character id are stored as an array of bytes (4 bytes in this case for int)
+
+death.(accId).(chrId)
+  objType (ushort)
+  level (int)
+  totalFame (int)
+  killer (string)
+  firstBorn (bool)
+  deathTime (DateTime)
+
+news
+  date => (json object)
+    Icon (string)
+    Title (string)
+    Text (string)
+    Link (string)
+
+vault.(accId)
+  vault.(chestId) => items (ushort[20])
+
+legend
+  (accId) => ""
+legends:(legendBoard):byFame [SortedSet]
+  (accId)(chrId) => totalFame
+legends:(legendBoard):byTimeOfDeath [SortedSet]
+  (accId)(chrId) => timeOfDeath
+legends:updateTime => last time legend sets were cleaned/updated
+// notes: Field key for the sorted sets is stored as a byte array
+   first four bytes accId, next four chrId. "legend" contains
+   accountId entries that should be glowing.
+
+guilds
+  name => guildId (int)
+
+guild.(id)
+  name (string)
+  level (int)
+  fame (int)
+  totalFame (int)
+  members (int[])
+  allies (int[])
+  board (string)
+
+ips
+  (ip) => (json object)
+    Accounts (int[])
+    Banned (bool)
+    Notes (string)
+
+pet.(accId).(petId)
+  objType (ushort)
+  rarity (ushort)
+  maxLevel (int)
+  A(ability#)Type (int)
+  A(ability#)Level (int)
+  A(ability#)Power (int)
+// notes: pets right now have 3 abilities. So there will be A1, A2, A3 for each Type, Level, Power.
+// The world server is programmed to allow more than 3 abilities so there could be a case where the
+// would be an A4, A5 and such in the future.
+
+market
+  (marketId) => marketId(4)|itemId(2)|price(4)|insertTime(4)|accountId(4) (byte[18])
+// notes: field value is a byte array. first 4 bytes: the market id, next 2 bytes: item id, and so forth
+
+tinkerQuests
+  (dbId) => (json object)
+    OwnerId (int)
+    Goal (int)
+    Tier (int)
+// notes: ownerId is player's accId. dbId is like marketNextId (so tinkerNextId in this case). there is no tinkerNextId,
+// the world server generates the next id based on the size of the list it grabs when it pulls this object from the db...
+
+collectedTaxes => amount collected (int)
+
+package.(pkgId)
+  (accId) => amount account purchased (int)
+
+mutes:(ip) => ""
+
+discordRank
+	discordId => rank
+discordAccount.(discordId)
+   (accId) => 0
