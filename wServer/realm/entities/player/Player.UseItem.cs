@@ -1089,7 +1089,7 @@ namespace wServer.realm.entities
             for (var i = 0; i < item.NumProjectiles; i++)
             {
                 var proj = CreateProjectile(prjDesc, item.ObjectType,
-                    (int)Stats.GetAttackDamage(prjDesc.MinDamage, prjDesc.MaxDamage),
+                    (int)Stats.GetAttackDamage(prjDesc.MinDamage, prjDesc.MaxDamage, true),
                     time.TotalElapsedMs, new Position() { X = X, Y = Y }, (float)(startAngle + arcGap * i));
                 Owner.EnterWorld(proj);
                 sPkts[i] = new AllyShoot()
@@ -1109,12 +1109,10 @@ namespace wServer.realm.entities
             var prjs = new Projectile[20];
             var prjDesc = item.Projectiles[0]; //Assume only one
             var batch = new Packet[21];
-            var s = Random.CurrentSeed;
-            Random.CurrentSeed = (uint)(s * time.TotalElapsedMs);
             for (var i = 0; i < 20; i++)
             {
                 var proj = CreateProjectile(prjDesc, item.ObjectType,
-                    (int)Stats.GetAttackDamage(prjDesc.MinDamage, prjDesc.MaxDamage),
+                    Random.Next(prjDesc.MinDamage, prjDesc.MaxDamage),
                     time.TotalElapsedMs, target, (float)(i * (Math.PI * 2) / 20));
                 Owner.EnterWorld(proj);
                 FameCounter.Shoot(proj);
@@ -1129,7 +1127,6 @@ namespace wServer.realm.entities
                 };
                 prjs[i] = proj;
             }
-            Random.CurrentSeed = s;
             batch[20] = new ShowEffect()
             {
                 EffectType = EffectType.Trail,

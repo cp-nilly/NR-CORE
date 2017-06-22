@@ -378,7 +378,7 @@ namespace wServer.realm.entities
         }
 
         public Player(Client client, bool saveInventory = true)
-            : base(client.Manager, client.Character.ObjectType, client.Random)
+            : base(client.Manager, client.Character.ObjectType)
         {
             var settings = Manager.Resources.Settings;
             var gameData = Manager.Resources.GameData;
