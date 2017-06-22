@@ -1163,5 +1163,10 @@ namespace wServer.realm.entities
         {
             Skin = _originalSkin;
         }
+
+        public void DropNextRandom()
+        {
+            Client.Random.NextInt();
+        }
     }
 }

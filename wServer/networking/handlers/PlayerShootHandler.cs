@@ -15,34 +15,30 @@ namespace wServer.networking.handlers
 
         protected override void HandlePacket(Client client, PlayerShoot packet)
         {
-            client.Manager.Logic.AddPendingAction(t => Handle(client.Player, packet, t));
-            //Handle(client.Player, packet);
+            //client.Manager.Logic.AddPendingAction(t => Handle(client.Player, packet, t));
+            Handle(client.Player, packet);
         }
         
-        void Handle(Player player, PlayerShoot packet, RealmTime time)
+        private void Handle(Player player, PlayerShoot packet)
         {
-            if (player?.Owner == null) 
-                return;
-            
             Item item;
             if (!player.Manager.Resources.GameData.Items.TryGetValue(packet.ContainerType, out item))
-                return;
-
-            // validate
-            int? infCount;
-            if ((infCount = player.ValidatePlayerShootPacket(item, packet.Time, time)) != null)
-            { // anti cheat measure
-                if (infCount > 50)
-                {
-                    CheatLog.Info($"{player.Name} kicked for messing with PlayerShoot");
-                    player.Client.Disconnect();
-                }
+            {
+                player.DropNextRandom();
                 return;
             }
 
-            // if not shooting main weapon do nothing (ability shoot is handled with useItem)
-            if (player.Inventory[0] != item)
+            if (item == player.Inventory[1])
+                return; // ability shoot handled by useitem
+
+            // validate
+            var result = player.ValidatePlayerShoot(item, packet.Time);
+            if (result != PlayerShootStatus.OK)
+            {
+                CheatLog.Info($"PlayerShoot validation failure ({player.Name}:{player.AccountId}): {result}");
+                player.DropNextRandom();
                 return;
+            }
 
             // create projectile and show other players
             var prjDesc = item.Projectiles[0]; //Assume only one

@@ -11,6 +11,8 @@ namespace wServer.realm
         internal const int NumStatTypes = 11;
         private const float MinAttackMult = 0.5f;
         private const float MaxAttackMult = 2f;
+        private const float MinAttackFreq = 0.0015f;
+        private const float MaxAttackFreq = 0.008f;
 
         internal readonly Player Owner;
         internal readonly BaseStatManager Base;
@@ -65,6 +67,19 @@ namespace wServer.realm
                 mult *= 1.5f;
 
             return mult;
+        }
+
+        public float GetAttackFrequency()
+        {
+            if (Owner.HasConditionEffect(ConditionEffects.Dazed))
+                return MinAttackFreq;
+
+            var rof = MinAttackFreq + (this[5] / 75f) * (MaxAttackFreq - MinAttackFreq);
+
+            if (Owner.HasConditionEffect(ConditionEffects.Berserk))
+                rof *= 1.5f;
+
+            return rof;
         }
 
         public static float GetDefenseDamage(Entity host, int dmg, int def)
