@@ -67,7 +67,7 @@ namespace wServer.realm.entities
             less than 1 means client time is slower than server time
             greater than 1 means client time is faster than server
         */
-        public float TimeAlignment()
+        public float TimeDiff()
         {
             if (_count < _capacity)
                 return 1;
@@ -111,11 +111,11 @@ namespace wServer.realm.entities
             if (_shotsLeft >= item.NumProjectiles)
                 _time.Push(time, Environment.TickCount);
             
-            var timeAlignment = _time.TimeAlignment();
-            //Log.Info($"timeAlignment: {timeAlignment}");
-            if (timeAlignment < MinTimeDiff)
+            var timeDiff = _time.TimeDiff();
+            //Log.Info($"timeDiff: {timeDiff}");
+            if (timeDiff < MinTimeDiff)
                 return PlayerShootStatus.CLIENT_TOO_SLOW;
-            if (timeAlignment > MaxTimeDiff)
+            if (timeDiff > MaxTimeDiff)
                 return PlayerShootStatus.CLIENT_TOO_FAST;
             
             return PlayerShootStatus.OK;
