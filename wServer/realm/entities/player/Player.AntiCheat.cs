@@ -26,7 +26,7 @@ namespace wServer.realm.entities
         private int _lastServerTime;
         private int _count;
 
-        public TimeCop(int capacity = 10)
+        public TimeCop(int capacity = 20)
         {
             _capacity = capacity;
             _clientDeltaLog = new int[_capacity];
@@ -79,7 +79,8 @@ namespace wServer.realm.entities
     partial class Player
     {
         private static readonly ILog CheatLog = LogManager.GetLogger("CheatLog");
-
+        private const float MaxTimeDiff = 1.08f;
+        private const float MinTimeDiff = 0.92f;
         private readonly TimeCop _time = new TimeCop();
         private int _shotsLeft;
         private int _lastShootTime;
@@ -111,9 +112,10 @@ namespace wServer.realm.entities
                 _time.Push(time, Environment.TickCount);
             
             var timeAlignment = _time.TimeAlignment();
-            if (timeAlignment < .95)
+            //Log.Info($"timeAlignment: {timeAlignment}");
+            if (timeAlignment < MinTimeDiff)
                 return PlayerShootStatus.CLIENT_TOO_SLOW;
-            if (timeAlignment > 1.05)
+            if (timeAlignment > MaxTimeDiff)
                 return PlayerShootStatus.CLIENT_TOO_FAST;
             
             return PlayerShootStatus.OK;
