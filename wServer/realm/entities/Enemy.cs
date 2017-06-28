@@ -18,7 +18,7 @@ namespace wServer.realm.entities
 
         DamageCounter counter;
         public Enemy(RealmManager manager, ushort objType)
-            : base(manager, objType, new wRandom())
+            : base(manager, objType)
         {
             stat = ObjectDesc.MaxHP == 0;
             counter = new DamageCounter(this);

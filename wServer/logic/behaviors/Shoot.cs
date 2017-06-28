@@ -178,12 +178,7 @@ namespace wServer.logic.behaviors
                     a += _angleOffset + ((_rotateAngle != null) ? (float) _rotateAngle * _rotateCount : 0);
                     _rotateCount++;
 
-                    int dmg;
-                    if (host is Character)
-                        dmg = (host as Character).Random.Next(desc.MinDamage, desc.MaxDamage);
-                    else
-                        dmg = Random.Next(desc.MinDamage, desc.MaxDamage);
-
+                    int dmg = Random.Next(desc.MinDamage, desc.MaxDamage);
                     var startAngle = a - _shootAngle * (count - 1) / 2;
                     byte prjId = 0;
                     Position prjPos = new Position() { X = host.X, Y = host.Y };

@@ -1,11 +1,18 @@
 ﻿using common.resources;
+using log4net;
 using wServer.realm.entities;
 
 namespace wServer.realm
 {
     public class StatsManager
     {
+        //static readonly ILog Log = LogManager.GetLogger(typeof(StatsManager));
+
         internal const int NumStatTypes = 11;
+        private const float MinAttackMult = 0.5f;
+        private const float MaxAttackMult = 2f;
+        private const float MinAttackFreq = 0.0015f;
+        private const float MaxAttackFreq = 0.008f;
 
         internal readonly Player Owner;
         internal readonly BaseStatManager Base;
@@ -40,18 +47,39 @@ namespace wServer.realm
             _stats[index].SetValue(this[index]);
         }
 
-        public float GetAttackDamage(int min, int max)
+        public int GetAttackDamage(int min, int max, bool isAbility = false)
         {
-            var att = this[2];
+            var ret = Owner.Client.Random.NextIntRange((uint)min, (uint)max) * GetAttackMult(isAbility);
+            //Log.Info($"Dmg: {ret}");
+            return (int)ret;
+        } 
+
+        public float GetAttackMult(bool isAbility)
+        {
+            if (isAbility)
+                return 1;
+
             if (Owner.HasConditionEffect(ConditionEffects.Weak))
-                att = 0;
+                return MinAttackMult;
 
-            var ret = Owner.Random.Next(min, max) * (0.5f + att / 50f);
-
+            var mult = MinAttackMult + (this[2] / 75f) * (MaxAttackMult - MinAttackMult);
             if (Owner.HasConditionEffect(ConditionEffects.Damaging))
-                ret *= 1.5f;
+                mult *= 1.5f;
 
-            return ret;
+            return mult;
+        }
+
+        public float GetAttackFrequency()
+        {
+            if (Owner.HasConditionEffect(ConditionEffects.Dazed))
+                return MinAttackFreq;
+
+            var rof = MinAttackFreq + (this[5] / 75f) * (MaxAttackFreq - MinAttackFreq);
+
+            if (Owner.HasConditionEffect(ConditionEffects.Berserk))
+                rof *= 1.5f;
+
+            return rof;
         }
 
         public static float GetDefenseDamage(Entity host, int dmg, int def)

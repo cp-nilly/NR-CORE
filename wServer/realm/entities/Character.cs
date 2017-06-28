@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using common.resources;
 
 namespace wServer.realm.entities
 {
     public abstract class Character : Entity
     {
-        public wRandom Random { get; private set; }
+        public static Random Random = new Random();
 
         private readonly SV<int> _hp;
         private readonly SV<int> _maximumHP;
@@ -21,10 +22,9 @@ namespace wServer.realm.entities
             set { _maximumHP.SetValue(value); }
         }
 
-        protected Character(RealmManager manager, ushort objType, wRandom rand)
+        protected Character(RealmManager manager, ushort objType)
             : base(manager, objType)
         {
-            Random = rand;
             _hp = new SV<int>(this, StatsType.HP, 0);
             _maximumHP = new SV<int>(this, StatsType.MaximumHP, 0);
 

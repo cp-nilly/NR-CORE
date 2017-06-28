@@ -58,8 +58,7 @@ namespace wServer.realm.entities
                 TileDesc tileDesc = Manager.Resources.GameData.Tiles[tile.TileId];
                 if (tileDesc.Damaging && (objDesc == null || !objDesc.ProtectFromGroundDamage))
                 {
-                    int dmg = Random.Next(tileDesc.MinDamage, tileDesc.MaxDamage);
-                    dmg = (int)Stats.GetDefenseDamage(dmg, true);
+                    int dmg = (int)Client.Random.NextIntRange((uint)tileDesc.MinDamage, (uint)tileDesc.MaxDamage);
 
                     HP -= dmg;
 
@@ -93,8 +92,7 @@ namespace wServer.realm.entities
             TileDesc tileDesc = Manager.Resources.GameData.Tiles[tile.TileId];
             if (tileDesc.Damaging && (objDesc == null || !objDesc.ProtectFromGroundDamage))
             {
-                int dmg = Random.Next(tileDesc.MinDamage, tileDesc.MaxDamage);
-                dmg = (int)Stats.GetDefenseDamage(dmg, true);
+                int dmg = (int)Client.Random.NextIntRange((uint)tileDesc.MinDamage, (uint)tileDesc.MaxDamage);
 
                 HP -= dmg;
 
