@@ -2,6 +2,8 @@
 
 NR-CORE is a Realm of the Mad God private server. It represents the continuation of the test source used to run Nilly's Realm and is an attempt to bring the broader rotmg private server community together so that we may take a little more enjoyment out of a game that we've all come to love.
 
+Note that this source is very much a WIP. Nothing is guaranteed to work.
+
 ## Getting Started
 The server consists of two primary components, the app engine (server) and the world server (wServer). The app engine is used to handle http get and post requests while the world server is used to run the game world. The source, as a whole, uses [redis](https://redis.io/) for data persistence. The RemoteLogger is optionally run on the server to provide a means of saving logging information.
 
@@ -30,11 +32,11 @@ An example of manually ranking a player via redis-cli (the default client suppli
 127.0.0.1:6379>
 ```
 
-## License
-This body of work falls under the GNU Affero General Public License v3.0 license. Consider this before deciding to use this source or any part of it.
-
 ## Getting Additional Help
-If you need additional help regarding this source, think about joining the NR community. You may find the forums here: [nillysrealm.com](https://nillysrealm.com/). We also have a discord server which can also be found by visiting the forums.
+If you need additional help regarding this source, think about joining the NR community.
+
+* Forum: https://nillysrealm.com/category/20/nr-core-testing
+* Discord: https://discord.gg/hmMTQWk
 
 ## Pioneering Credits
 The following list of individuals each played a special role in making this source what it is today. Aside from creepylava, they've all worked on the nr test source at one point or another.
