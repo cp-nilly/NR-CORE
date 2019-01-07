@@ -241,7 +241,7 @@ namespace wServer.realm
 
             if (world is Test &&
                 !(world as Test).JsonLoaded &&
-                acc.Rank < 50) //client.Manager.Resources.Settings.EditorMinRank)
+                acc.Rank < client.Manager.Resources.Settings.MapMinRank)
             {
                 client.SendFailure("Only players with a rank of 50 and above can make test maps.",
                     Failure.MessageWithDisconnect);

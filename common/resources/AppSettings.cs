@@ -12,7 +12,8 @@ namespace common.resources
 
         public string MenuMusic { get; private set; }
         public string DeadMusic { get; private set; }
-        public int EditorMinRank { get; private set; }
+        public int MapMinRank { get; private set; }
+        public int SpriteMinRank { get; private set; }
         public int CharacterSlotCost { get; private set; }
         public int CharacterSlotCurrency { get; private set; }
         public int VaultChestCost { get; private set; }
@@ -35,7 +36,8 @@ namespace common.resources
 
             MenuMusic = GetStringValue("MenuMusic");
             DeadMusic = GetStringValue("DeadMusic");
-            EditorMinRank = GetIntValue("EditorMinRank");
+            MapMinRank = GetIntValue("MapMinRank");
+            SpriteMinRank = GetIntValue("SpriteMinRank");
             CharacterSlotCost = GetIntValue("CharacterSlotCost");
             CharacterSlotCurrency = GetIntValue("CharacterSlotCurrency");
             VaultChestCost = GetIntValue("VaultChestCost");

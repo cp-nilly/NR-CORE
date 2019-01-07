@@ -283,6 +283,8 @@ namespace server
         public int CharSlotCurrency { get; private set; }
         public string MenuMusic { get; private set; }
         public string DeadMusic { get; private set; }
+        public int MapMinRank { get; private set; }
+        public int SpriteMinRank { get; private set; }
         public int BeginnerPackageTimeLeft { get; private set; }
 
         public Vault Vault { get; private set; }
@@ -317,6 +319,8 @@ namespace server
                 CharSlotCurrency = Program.Resources.Settings.CharacterSlotCurrency,
                 MenuMusic = Program.Resources.Settings.MenuMusic,
                 DeadMusic = Program.Resources.Settings.DeadMusic,
+                MapMinRank = Program.Resources.Settings.MapMinRank,
+                SpriteMinRank = Program.Resources.Settings.SpriteMinRank,
                 BeginnerPackageTimeLeft = 0,
 
                 Vault = Vault.FromDb(acc, new DbVault(acc)),
@@ -354,6 +358,8 @@ namespace server
                     new XElement("CharSlotCurrency", CharSlotCurrency),
                     new XElement("MenuMusic", MenuMusic),
                     new XElement("DeadMusic", DeadMusic),
+                    new XElement("MapMinRank", MapMinRank),
+                    new XElement("SpriteMinRank", SpriteMinRank),
                     new XElement("BeginnerPackageTimeLeft", BeginnerPackageTimeLeft),
 
                     Vault.ToXml(),
